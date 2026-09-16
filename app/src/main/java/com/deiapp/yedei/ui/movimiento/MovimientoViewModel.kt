@@ -14,9 +14,11 @@ class MovimientoViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val repository: MovimientoRepository
+    private val repository:
+            MovimientoRepository
 
-    val movimientos: LiveData<List<MovimientoEntity>>
+    val movimientos:
+            LiveData<List<MovimientoEntity>>
 
     init {
         val movimientoDao =
@@ -25,7 +27,9 @@ class MovimientoViewModel(
                 .movimientoDao()
 
         repository =
-            MovimientoRepository(movimientoDao)
+            MovimientoRepository(
+                movimientoDao
+            )
 
         movimientos =
             repository
@@ -62,45 +66,104 @@ class MovimientoViewModel(
     }
 
     fun insertar(
-        movimiento: MovimientoEntity
+        movimiento: MovimientoEntity,
+        onCompletado: (Long) -> Unit,
+        onError: (Throwable) -> Unit
     ) {
         viewModelScope.launch {
-            repository.insertar(
-                movimiento
-            )
+
+            try {
+
+                val movimientoId =
+                    repository.insertar(
+                        movimiento
+                    )
+
+                onCompletado(
+                    movimientoId
+                )
+
+            } catch (error: Throwable) {
+
+                onError(
+                    error
+                )
+            }
         }
     }
 
     fun actualizar(
-        movimiento: MovimientoEntity
+        movimiento: MovimientoEntity,
+        onCompletado: () -> Unit = {},
+        onError: (Throwable) -> Unit = {}
     ) {
         viewModelScope.launch {
 
-            val movimientoActualizado =
-                movimiento.copy(
-                    actualizadoEn =
-                        System.currentTimeMillis()
+            try {
+
+                val movimientoActualizado =
+                    movimiento.copy(
+                        actualizadoEn =
+                            System.currentTimeMillis()
+                    )
+
+                repository.actualizar(
+                    movimientoActualizado
                 )
 
-            repository.actualizar(
-                movimientoActualizado
-            )
+                onCompletado()
+
+            } catch (error: Throwable) {
+
+                onError(
+                    error
+                )
+            }
         }
     }
 
     fun eliminar(
-        movimiento: MovimientoEntity
+        movimiento: MovimientoEntity,
+        onCompletado: () -> Unit = {},
+        onError: (Throwable) -> Unit = {}
     ) {
         viewModelScope.launch {
-            repository.eliminar(
-                movimiento
-            )
+
+            try {
+
+                repository.eliminar(
+                    movimiento
+                )
+
+                onCompletado()
+
+            } catch (error: Throwable) {
+
+                onError(
+                    error
+                )
+            }
         }
     }
 
-    fun eliminarTodos() {
+    fun eliminarTodos(
+        onCompletado: () -> Unit = {},
+        onError: (Throwable) -> Unit = {}
+    ) {
         viewModelScope.launch {
-            repository.eliminarTodos()
+
+            try {
+
+                repository.eliminarTodos()
+
+                onCompletado()
+
+            } catch (error: Throwable) {
+
+                onError(
+                    error
+                )
+            }
         }
     }
 

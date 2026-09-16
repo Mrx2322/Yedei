@@ -1,5 +1,7 @@
 package com.deiapp.yedei
 
+import android.content.Intent
+import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -10,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
 import com.deiapp.yedei.ui.movimiento.MovimientoViewModel
+import com.deiapp.yedei.ui.movimiento.adapter.MovimientoAdapter
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import java.text.NumberFormat
@@ -26,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private val movimientoViewModel:
             MovimientoViewModel by viewModels()
 
+    private lateinit var movimientoAdapter:
+            MovimientoAdapter
+
     private lateinit var tvMesActual: TextView
     private lateinit var btnMesAnterior: TextView
     private lateinit var btnMesSiguiente: TextView
@@ -36,11 +43,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvPorcentajePresupuesto: TextView
     private lateinit var tvDetallePresupuesto: TextView
+
     private lateinit var progresoPresupuesto:
             LinearProgressIndicator
 
     private lateinit var rvMovimientos: RecyclerView
     private lateinit var layoutSinMovimientos: View
+    private lateinit var tvVerTodos: TextView
 
     private lateinit var fabAgregarMovimiento:
             ExtendedFloatingActionButton
@@ -80,6 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         configurarInsets()
         inicializarComponentes()
+        configurarRecyclerView()
         configurarEventos()
         actualizarMesSeleccionado()
         configurarPresupuestoInicial()
@@ -150,10 +160,36 @@ class MainActivity : AppCompatActivity() {
                 R.id.layoutSinMovimientos
             )
 
+        tvVerTodos =
+            findViewById(R.id.tvVerTodos)
+
         fabAgregarMovimiento =
             findViewById(
                 R.id.fabAgregarMovimiento
             )
+    }
+
+    private fun configurarRecyclerView() {
+
+        movimientoAdapter =
+            MovimientoAdapter { movimiento ->
+
+                Toast.makeText(
+                    this,
+                    movimiento.categoria,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        rvMovimientos.layoutManager =
+            LinearLayoutManager(this)
+
+        rvMovimientos.adapter =
+            movimientoAdapter
+
+        rvMovimientos.setHasFixedSize(
+            false
+        )
     }
 
     private fun configurarEventos() {
@@ -178,13 +214,24 @@ class MainActivity : AppCompatActivity() {
             actualizarMesSeleccionado()
         }
 
-        fabAgregarMovimiento.setOnClickListener {
+        tvVerTodos.setOnClickListener {
 
             Toast.makeText(
                 this,
-                "Próximamente agregaremos el formulario",
+                "Próximamente mostraremos el historial completo",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+        fabAgregarMovimiento.setOnClickListener {
+
+            val intent =
+                Intent(
+                    this,
+                    AgregarMovimientoActivity::class.java
+                )
+
+            startActivity(intent)
         }
     }
 
@@ -228,15 +275,19 @@ class MainActivity : AppCompatActivity() {
                 .replaceFirstChar { caracter ->
 
                     if (caracter.isLowerCase()) {
+
                         caracter.titlecase(
                             Locale("es", "PE")
                         )
+
                     } else {
+
                         caracter.toString()
                     }
                 }
 
-        tvMesActual.text = nombreMes
+        tvMesActual.text =
+            nombreMes
     }
 
     private fun obtenerInicioMes(): Long {
@@ -333,22 +384,43 @@ class MainActivity : AppCompatActivity() {
         movimientosPeriodoLiveData
             ?.observe(this) { movimientos ->
 
-                val hayMovimientos =
-                    movimientos.isNotEmpty()
+                val movimientosRecientes =
+                    movimientos.take(5)
 
-                rvMovimientos.visibility =
-                    if (hayMovimientos) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                movimientoAdapter.submitList(
+                    movimientosRecientes
+                )
 
-                layoutSinMovimientos.visibility =
-                    if (hayMovimientos) {
-                        View.GONE
-                    } else {
-                        View.VISIBLE
-                    }
+                actualizarEstadoLista(
+                    hayMovimientos =
+                        movimientos.isNotEmpty()
+                )
+            }
+    }
+
+    private fun actualizarEstadoLista(
+        hayMovimientos: Boolean
+    ) {
+
+        rvMovimientos.visibility =
+            if (hayMovimientos) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+        layoutSinMovimientos.visibility =
+            if (hayMovimientos) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+
+        tvVerTodos.visibility =
+            if (hayMovimientos) {
+                View.VISIBLE
+            } else {
+                View.GONE
             }
     }
 

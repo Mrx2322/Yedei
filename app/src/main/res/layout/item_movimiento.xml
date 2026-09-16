@@ -1,6 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/cardMovimiento"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+
+    app:cardBackgroundColor="@color/yedei_surface"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/yedei_border"
+    app:strokeWidth="1dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        android:padding="15dp">
+
+
+        <!-- INDICADOR DEL TIPO -->
+
+        <TextView
+            android:id="@+id/tvIconoMovimiento"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+
+            android:gravity="center"
+
+            android:textColor="@color/yedei_income"
+            android:textSize="19sp"
+            android:textStyle="bold"
+
+            tools:background="@color/yedei_income_background"
+            tools:text="I" />
+
+
+        <!-- INFORMACIÓN -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvCategoriaMovimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:ellipsize="end"
+                android:maxLines="1"
+
+                android:textColor="@color/yedei_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+
+                tools:text="Sueldo" />
+
+
+            <TextView
+                android:id="@+id/tvDescripcionMovimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="3dp"
+
+                android:ellipsize="end"
+                android:maxLines="1"
+
+                android:textColor="@color/yedei_text_secondary"
+                android:textSize="13sp"
+
+                tools:text="Pago del mes" />
+
+
+            <TextView
+                android:id="@+id/tvFechaMovimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="4dp"
+
+                android:textColor="@color/yedei_text_disabled"
+                android:textSize="12sp"
+
+                tools:text="16 de septiembre" />
+
+        </LinearLayout>
+
+
+        <!-- MONTO -->
+
+        <TextView
+            android:id="@+id/tvMontoMovimiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="10dp"
+
+            android:gravity="end"
+            android:maxLines="1"
+
+            android:textColor="@color/yedei_income"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            tools:text="+ S/ 1,500.00" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
