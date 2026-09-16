@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
+    <!-- COLORES BÁSICOS -->
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+
+    <!-- IDENTIDAD DE YEDEI -->
+
+    <color name="yedei_primary">#6255E7</color>
+    <color name="yedei_primary_dark">#312E81</color>
+    <color name="yedei_primary_light">#EEEAFE</color>
+
+    <color name="yedei_secondary">#22C55E</color>
+    <color name="yedei_secondary_dark">#15803D</color>
+    <color name="yedei_secondary_light">#DCFCE7</color>
+
+    <color name="yedei_navy">#18213F</color>
+
+
+    <!-- FONDOS -->
+
+    <color name="yedei_background">#F7F8FC</color>
+    <color name="yedei_surface">#FFFFFFFF</color>
+    <color name="yedei_surface_variant">#F0F1F7</color>
+
+
+    <!-- TEXTOS -->
+
+    <color name="yedei_text_primary">#191B2A</color>
+    <color name="yedei_text_secondary">#6B7280</color>
+    <color name="yedei_text_disabled">#9CA3AF</color>
+    <color name="yedei_text_on_primary">#FFFFFFFF</color>
+
+
+    <!-- MOVIMIENTOS FINANCIEROS -->
+
+    <color name="yedei_income">#16A34A</color>
+    <color name="yedei_income_background">#DCFCE7</color>
+
+    <color name="yedei_expense">#DC2626</color>
+    <color name="yedei_expense_background">#FEE2E2</color>
+
+    <color name="yedei_warning">#F59E0B</color>
+
+
+    <!-- BORDES Y DIVISORES -->
+
+    <color name="yedei_border">#E3E5ED</color>
+    <color name="yedei_divider">#EAECF2</color>
+
+
+    <!-- SOMBRAS -->
+
+    <color name="yedei_shadow">#1A000000</color>
+
 </resources>

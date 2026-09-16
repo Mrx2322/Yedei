@@ -1,9 +1,113 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Yedei" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style
+        name="Base.Theme.Yedei"
+        parent="Theme.Material3.Light.NoActionBar">
+
+        <!-- COLORES PRINCIPALES -->
+
+        <item name="colorPrimary">
+            @color/yedei_primary
+        </item>
+
+        <item name="colorOnPrimary">
+            @color/yedei_text_on_primary
+        </item>
+
+        <item name="colorPrimaryContainer">
+            @color/yedei_primary_light
+        </item>
+
+        <item name="colorOnPrimaryContainer">
+            @color/yedei_primary_dark
+        </item>
+
+
+        <!-- COLORES SECUNDARIOS -->
+
+        <item name="colorSecondary">
+            @color/yedei_secondary
+        </item>
+
+        <item name="colorOnSecondary">
+            @color/white
+        </item>
+
+        <item name="colorSecondaryContainer">
+            @color/yedei_secondary_light
+        </item>
+
+        <item name="colorOnSecondaryContainer">
+            @color/yedei_secondary_dark
+        </item>
+
+
+        <!-- FONDO Y SUPERFICIES -->
+
+        <item name="android:colorBackground">
+            @color/yedei_background
+        </item>
+
+        <item name="colorSurface">
+            @color/yedei_surface
+        </item>
+
+        <item name="colorOnSurface">
+            @color/yedei_text_primary
+        </item>
+
+        <item name="colorSurfaceVariant">
+            @color/yedei_surface_variant
+        </item>
+
+        <item name="colorOnSurfaceVariant">
+            @color/yedei_text_secondary
+        </item>
+
+
+        <!-- BARRAS DEL SISTEMA -->
+
+        <item name="android:statusBarColor">
+            @color/yedei_background
+        </item>
+
+        <item name="android:navigationBarColor">
+            @color/yedei_surface
+        </item>
+
+        <item name="android:windowLightStatusBar">
+            true
+        </item>
+
+        <item name="android:windowLightNavigationBar">
+            true
+        </item>
+
+
+        <!-- VENTANA -->
+
+        <item name="android:windowBackground">
+            @color/yedei_background
+        </item>
+
+        <item name="android:windowNoTitle">
+            true
+        </item>
+
+
+        <!-- COLOR DE CONTROLES -->
+
+        <item name="android:colorAccent">
+            @color/yedei_primary
+        </item>
+
     </style>
 
-    <style name="Theme.Yedei" parent="Base.Theme.Yedei" />
+
+    <style
+        name="Theme.Yedei"
+        parent="Base.Theme.Yedei" />
+
 </resources>

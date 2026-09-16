@@ -1,3 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <string name="app_name">Yedei</string>
+
+    <!-- APLICACIÓN -->
+
+    <string name="app_name">YEDEI</string>
+    <string name="app_slogan">Tu dinero, en equilibrio.</string>
+
+
+    <!-- PANTALLA PRINCIPAL -->
+
+    <string name="home_greeting">Hola, Bienvenido a YEDEI</string>
+    <string name="home_subtitle">Este es el resumen de tus finanzas</string>
+
+    <string name="current_month">Este mes</string>
+    <string name="current_balance">Saldo disponible</string>
+    <string name="total_income">Ingresos</string>
+    <string name="total_expenses">Gastos</string>
+
+    <string name="monthly_budget">Presupuesto mensual</string>
+    <string name="budget_available">Disponible</string>
+    <string name="budget_spent">Gastado</string>
+
+    <string name="recent_movements">Movimientos recientes</string>
+    <string name="view_all">Ver todos</string>
+    <string name="no_movements">Todavía no tienes movimientos registrados</string>
+    <string name="no_movements_help">Agrega tu primer ingreso o gasto para comenzar</string>
+
+
+    <!-- MOVIMIENTOS -->
+
+    <string name="new_movement">Nuevo movimiento</string>
+    <string name="edit_movement">Editar movimiento</string>
+    <string name="add_movement">Agregar movimiento</string>
+
+    <string name="movement_type">Tipo de movimiento</string>
+    <string name="movement_income">Ingreso</string>
+    <string name="movement_expense">Gasto</string>
+
+    <string name="movement_amount">Monto</string>
+    <string name="movement_amount_hint">0.00</string>
+
+    <string name="movement_category">Categoría</string>
+    <string name="movement_description">Descripción</string>
+    <string name="movement_description_hint">Escribe una descripción</string>
+
+    <string name="movement_date">Fecha</string>
+    <string name="select_date">Seleccionar fecha</string>
+
+    <string name="save_movement">Guardar movimiento</string>
+    <string name="update_movement">Actualizar movimiento</string>
+    <string name="delete_movement">Eliminar movimiento</string>
+    <string name="cancel">Cancelar</string>
+
+
+    <!-- CATEGORÍAS -->
+
+    <string name="category_salary">Sueldo</string>
+    <string name="category_sales">Ventas</string>
+    <string name="category_extra_income">Ingreso extra</string>
+    <string name="category_food">Comida</string>
+    <string name="category_transport">Transporte</string>
+    <string name="category_home">Hogar</string>
+    <string name="category_services">Servicios</string>
+    <string name="category_health">Salud</string>
+    <string name="category_entertainment">Entretenimiento</string>
+    <string name="category_education">Educación</string>
+    <string name="category_other">Otros</string>
+
+
+    <!-- NAVEGACIÓN -->
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_movements">Movimientos</string>
+    <string name="nav_statistics">Estadísticas</string>
+    <string name="nav_settings">Ajustes</string>
+
+
+    <!-- MENSAJES -->
+
+    <string name="movement_saved">Movimiento guardado correctamente</string>
+    <string name="movement_updated">Movimiento actualizado correctamente</string>
+    <string name="movement_deleted">Movimiento eliminado</string>
+
+    <string name="invalid_amount">Ingresa un monto válido</string>
+    <string name="select_movement_type">Selecciona si es un ingreso o gasto</string>
+    <string name="select_category">Selecciona una categoría</string>
+
+
+    <!-- FORMATOS -->
+
+    <string name="currency_format">S/ %1$.2f</string>
+    <string name="percentage_format">%1$d%%</string>
+
+
+    <!-- ACCESIBILIDAD -->
+
+    <string name="content_description_logo">Logotipo de YEDEI</string>
+    <string name="content_description_add">Agregar un movimiento</string>
+    <string name="content_description_income">Ingresos del mes</string>
+    <string name="content_description_expenses">Gastos del mes</string>
+
 </resources>
