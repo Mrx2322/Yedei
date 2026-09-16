@@ -1,36 +1,51 @@
 package com.deiapp.yedei
 
-import com.deiapp.yedei.ui.movimiento.HistorialMovimientosActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.Intent
-import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
+import com.deiapp.yedei.data.local.entity.PresupuestoEntity
+import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
+import com.deiapp.yedei.ui.movimiento.HistorialMovimientosActivity
 import com.deiapp.yedei.ui.movimiento.MovimientoViewModel
 import com.deiapp.yedei.ui.movimiento.adapter.MovimientoAdapter
+import com.deiapp.yedei.ui.presupuesto.PresupuestoViewModel
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Currency
 import java.util.Locale
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
     private val movimientoViewModel:
             MovimientoViewModel by viewModels()
+
+    private val presupuestoViewModel:
+            PresupuestoViewModel by viewModels()
 
     private lateinit var movimientoAdapter:
             MovimientoAdapter
@@ -43,15 +58,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvIngresos: TextView
     private lateinit var tvGastos: TextView
 
-    private lateinit var tvPorcentajePresupuesto: TextView
-    private lateinit var tvDetallePresupuesto: TextView
+    private lateinit var cardPresupuesto:
+            MaterialCardView
+
+    private lateinit var tvPorcentajePresupuesto:
+            TextView
+
+    private lateinit var tvDetallePresupuesto:
+            TextView
 
     private lateinit var progresoPresupuesto:
             LinearProgressIndicator
 
-    private lateinit var rvMovimientos: RecyclerView
-    private lateinit var layoutSinMovimientos: View
-    private lateinit var tvVerTodos: TextView
+    private lateinit var rvMovimientos:
+            RecyclerView
+
+    private lateinit var layoutSinMovimientos:
+            View
+
+    private lateinit var tvVerTodos:
+            TextView
 
     private lateinit var fabAgregarMovimiento:
             ExtendedFloatingActionButton
@@ -59,8 +85,14 @@ class MainActivity : AppCompatActivity() {
     private val calendarioMes:
             Calendar = Calendar.getInstance()
 
-    private var totalIngresosCentimos: Long = 0
-    private var totalGastosCentimos: Long = 0
+    private var totalIngresosCentimos:
+            Long = 0
+
+    private var totalGastosCentimos:
+            Long = 0
+
+    private var presupuestoCentimos:
+            Long = 0
 
     private var movimientosPeriodoLiveData:
             LiveData<List<MovimientoEntity>>? = null
@@ -71,11 +103,15 @@ class MainActivity : AppCompatActivity() {
     private var gastosPeriodoLiveData:
             LiveData<Long>? = null
 
+    private var presupuestoPeriodoLiveData:
+            LiveData<PresupuestoEntity?>? = null
+
     private val formatoMoneda =
         NumberFormat.getCurrencyInstance(
             Locale("es", "PE")
         ).apply {
-            currency = Currency.getInstance("PEN")
+            currency =
+                Currency.getInstance("PEN")
         }
 
     override fun onCreate(
@@ -84,21 +120,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-
-        setContentView(
-            R.layout.activity_main
-        )
+        setContentView(R.layout.activity_main)
 
         configurarInsets()
         inicializarComponentes()
         configurarRecyclerView()
         configurarEventos()
         actualizarMesSeleccionado()
-        configurarPresupuestoInicial()
     }
 
     private fun configurarInsets() {
-
         ViewCompat.setOnApplyWindowInsetsListener(
             findViewById(R.id.main)
         ) { view, insets ->
@@ -120,7 +151,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun inicializarComponentes() {
-
         tvMesActual =
             findViewById(R.id.tvMesActual)
 
@@ -139,43 +169,34 @@ class MainActivity : AppCompatActivity() {
         tvGastos =
             findViewById(R.id.tvGastos)
 
+        cardPresupuesto =
+            findViewById(R.id.cardPresupuesto)
+
         tvPorcentajePresupuesto =
-            findViewById(
-                R.id.tvPorcentajePresupuesto
-            )
+            findViewById(R.id.tvPorcentajePresupuesto)
 
         tvDetallePresupuesto =
-            findViewById(
-                R.id.tvDetallePresupuesto
-            )
+            findViewById(R.id.tvDetallePresupuesto)
 
         progresoPresupuesto =
-            findViewById(
-                R.id.progresoPresupuesto
-            )
+            findViewById(R.id.progresoPresupuesto)
 
         rvMovimientos =
             findViewById(R.id.rvMovimientos)
 
         layoutSinMovimientos =
-            findViewById(
-                R.id.layoutSinMovimientos
-            )
+            findViewById(R.id.layoutSinMovimientos)
 
         tvVerTodos =
             findViewById(R.id.tvVerTodos)
 
         fabAgregarMovimiento =
-            findViewById(
-                R.id.fabAgregarMovimiento
-            )
+            findViewById(R.id.fabAgregarMovimiento)
     }
 
     private fun configurarRecyclerView() {
-
         movimientoAdapter =
             MovimientoAdapter { movimiento ->
-
                 mostrarOpcionesMovimiento(
                     movimiento
                 )
@@ -187,15 +208,11 @@ class MainActivity : AppCompatActivity() {
         rvMovimientos.adapter =
             movimientoAdapter
 
-        rvMovimientos.setHasFixedSize(
-            false
-        )
+        rvMovimientos.setHasFixedSize(false)
     }
 
     private fun configurarEventos() {
-
         btnMesAnterior.setOnClickListener {
-
             calendarioMes.add(
                 Calendar.MONTH,
                 -1
@@ -205,7 +222,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMesSiguiente.setOnClickListener {
-
             calendarioMes.add(
                 Calendar.MONTH,
                 1
@@ -214,32 +230,38 @@ class MainActivity : AppCompatActivity() {
             actualizarMesSeleccionado()
         }
 
-        tvVerTodos.setOnClickListener {
+        cardPresupuesto.setOnClickListener {
+            mostrarDialogoPresupuesto()
+        }
 
-            val intent =
+        tvVerTodos.setOnClickListener {
+            startActivity(
                 Intent(
                     this,
                     HistorialMovimientosActivity::class.java
                 )
-
-            startActivity(intent)
+            )
         }
 
         fabAgregarMovimiento.setOnClickListener {
-
-            val intent =
+            startActivity(
                 Intent(
                     this,
                     AgregarMovimientoActivity::class.java
                 )
-
-            startActivity(intent)
+            )
         }
     }
 
     private fun actualizarMesSeleccionado() {
-
         mostrarNombreMes()
+
+        totalIngresosCentimos = 0
+        totalGastosCentimos = 0
+        presupuestoCentimos = 0
+
+        actualizarTotalesVisuales()
+        actualizarPresupuestoVisual()
 
         val fechaInicio =
             obtenerInicioMes()
@@ -248,23 +270,26 @@ class MainActivity : AppCompatActivity() {
             obtenerFinMes()
 
         observarMovimientosDelMes(
-            fechaInicio = fechaInicio,
-            fechaFin = fechaFin
+            fechaInicio,
+            fechaFin
         )
 
         observarIngresosDelMes(
-            fechaInicio = fechaInicio,
-            fechaFin = fechaFin
+            fechaInicio,
+            fechaFin
         )
 
         observarGastosDelMes(
-            fechaInicio = fechaInicio,
-            fechaFin = fechaFin
+            fechaInicio,
+            fechaFin
+        )
+
+        observarPresupuestoDelMes(
+            obtenerPeriodoActual()
         )
     }
 
     private fun mostrarNombreMes() {
-
         val formatoMes =
             SimpleDateFormat(
                 "MMMM yyyy",
@@ -275,25 +300,28 @@ class MainActivity : AppCompatActivity() {
             formatoMes
                 .format(calendarioMes.time)
                 .replaceFirstChar { caracter ->
-
                     if (caracter.isLowerCase()) {
-
                         caracter.titlecase(
                             Locale("es", "PE")
                         )
-
                     } else {
-
                         caracter.toString()
                     }
                 }
 
-        tvMesActual.text =
-            nombreMes
+        tvMesActual.text = nombreMes
+    }
+
+    private fun obtenerPeriodoActual(): String {
+        return SimpleDateFormat(
+            "yyyy-MM",
+            Locale.US
+        ).format(
+            calendarioMes.time
+        )
     }
 
     private fun obtenerInicioMes(): Long {
-
         val calendarioInicio =
             calendarioMes.clone() as Calendar
 
@@ -326,7 +354,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun obtenerFinMes(): Long {
-
         val calendarioFin =
             calendarioMes.clone() as Calendar
 
@@ -372,38 +399,208 @@ class MainActivity : AppCompatActivity() {
         fechaInicio: Long,
         fechaFin: Long
     ) {
-
         movimientosPeriodoLiveData
             ?.removeObservers(this)
 
         movimientosPeriodoLiveData =
             movimientoViewModel
                 .observarPorPeriodo(
-                    fechaInicio = fechaInicio,
-                    fechaFin = fechaFin
+                    fechaInicio,
+                    fechaFin
                 )
 
         movimientosPeriodoLiveData
             ?.observe(this) { movimientos ->
 
-                val movimientosRecientes =
-                    movimientos.take(5)
+                val lista =
+                    movimientos.orEmpty()
 
                 movimientoAdapter.submitList(
-                    movimientosRecientes
+                    lista.take(5)
                 )
 
                 actualizarEstadoLista(
-                    hayMovimientos =
-                        movimientos.isNotEmpty()
+                    lista.isNotEmpty()
                 )
             }
+    }
+
+    private fun observarIngresosDelMes(
+        fechaInicio: Long,
+        fechaFin: Long
+    ) {
+        ingresosPeriodoLiveData
+            ?.removeObservers(this)
+
+        ingresosPeriodoLiveData =
+            movimientoViewModel
+                .observarTotalPorTipo(
+                    MovimientoViewModel.TIPO_INGRESO,
+                    fechaInicio,
+                    fechaFin
+                )
+
+        ingresosPeriodoLiveData
+            ?.observe(this) { total ->
+                totalIngresosCentimos =
+                    total ?: 0
+
+                actualizarTotalesVisuales()
+            }
+    }
+
+    private fun observarGastosDelMes(
+        fechaInicio: Long,
+        fechaFin: Long
+    ) {
+        gastosPeriodoLiveData
+            ?.removeObservers(this)
+
+        gastosPeriodoLiveData =
+            movimientoViewModel
+                .observarTotalPorTipo(
+                    MovimientoViewModel.TIPO_GASTO,
+                    fechaInicio,
+                    fechaFin
+                )
+
+        gastosPeriodoLiveData
+            ?.observe(this) { total ->
+                totalGastosCentimos =
+                    total ?: 0
+
+                actualizarTotalesVisuales()
+                actualizarPresupuestoVisual()
+            }
+    }
+
+    private fun observarPresupuestoDelMes(
+        periodo: String
+    ) {
+        presupuestoPeriodoLiveData
+            ?.removeObservers(this)
+
+        presupuestoPeriodoLiveData =
+            presupuestoViewModel
+                .observarPorPeriodo(periodo)
+
+        presupuestoPeriodoLiveData
+            ?.observe(this) { presupuesto ->
+                presupuestoCentimos =
+                    presupuesto?.montoCentimos ?: 0
+
+                actualizarPresupuestoVisual()
+            }
+    }
+
+    private fun actualizarTotalesVisuales() {
+        tvIngresos.text =
+            formatearMonto(
+                totalIngresosCentimos
+            )
+
+        tvGastos.text =
+            formatearMonto(
+                totalGastosCentimos
+            )
+
+        val saldoCentimos =
+            totalIngresosCentimos -
+                    totalGastosCentimos
+
+        tvSaldo.text =
+            formatearMonto(
+                saldoCentimos
+            )
+    }
+
+    private fun actualizarPresupuestoVisual() {
+        if (presupuestoCentimos <= 0) {
+            progresoPresupuesto.setProgressCompat(
+                0,
+                true
+            )
+
+            progresoPresupuesto.setIndicatorColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.yedei_primary
+                )
+            )
+
+            tvPorcentajePresupuesto.text =
+                getString(
+                    R.string.percentage_format,
+                    0
+                )
+
+            tvDetallePresupuesto.setText(
+                R.string.budget_not_configured
+            )
+
+            return
+        }
+
+        val porcentajeReal =
+            (
+                    totalGastosCentimos.toDouble() /
+                            presupuestoCentimos.toDouble() *
+                            100.0
+                    ).roundToInt()
+
+        val progreso =
+            porcentajeReal.coerceIn(
+                0,
+                100
+            )
+
+        progresoPresupuesto.setProgressCompat(
+            progreso,
+            true
+        )
+
+        val colorIndicador =
+            if (
+                totalGastosCentimos >
+                presupuestoCentimos
+            ) {
+                R.color.yedei_expense
+            } else {
+                R.color.yedei_primary
+            }
+
+        progresoPresupuesto.setIndicatorColor(
+            ContextCompat.getColor(
+                this,
+                colorIndicador
+            )
+        )
+
+        tvPorcentajePresupuesto.text =
+            getString(
+                R.string.percentage_format,
+                porcentajeReal.coerceAtLeast(0)
+            )
+
+        val disponibleCentimos =
+            presupuestoCentimos -
+                    totalGastosCentimos
+
+        tvDetallePresupuesto.text =
+            getString(
+                R.string.budget_available_format,
+                formatearMonto(
+                    disponibleCentimos
+                ),
+                formatearMonto(
+                    presupuestoCentimos
+                )
+            )
     }
 
     private fun actualizarEstadoLista(
         hayMovimientos: Boolean
     ) {
-
         rvMovimientos.visibility =
             if (hayMovimientos) {
                 View.VISIBLE
@@ -426,105 +623,182 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun observarIngresosDelMes(
-        fechaInicio: Long,
-        fechaFin: Long
-    ) {
-
-        ingresosPeriodoLiveData
-            ?.removeObservers(this)
-
-        ingresosPeriodoLiveData =
-            movimientoViewModel
-                .observarTotalPorTipo(
-                    tipo =
-                        MovimientoViewModel
-                            .TIPO_INGRESO,
-                    fechaInicio = fechaInicio,
-                    fechaFin = fechaFin
+    private fun mostrarDialogoPresupuesto() {
+        val dialogView =
+            LayoutInflater
+                .from(this)
+                .inflate(
+                    R.layout.dialog_presupuesto,
+                    null
                 )
 
-        ingresosPeriodoLiveData
-            ?.observe(this) { total ->
+        val tvTituloPresupuesto =
+            dialogView.findViewById<TextView>(
+                R.id.tvTituloPresupuesto
+            )
 
-                totalIngresosCentimos =
-                    total ?: 0
+        val layoutMontoPresupuesto =
+            dialogView.findViewById<TextInputLayout>(
+                R.id.layoutMontoPresupuesto
+            )
 
-                tvIngresos.text =
-                    formatearMonto(
-                        totalIngresosCentimos
-                    )
+        val etMontoPresupuesto =
+            dialogView.findViewById<TextInputEditText>(
+                R.id.etMontoPresupuesto
+            )
 
-                actualizarSaldo()
-            }
-    }
+        val btnCancelarPresupuesto =
+            dialogView.findViewById<MaterialButton>(
+                R.id.btnCancelarPresupuesto
+            )
 
-    private fun observarGastosDelMes(
-        fechaInicio: Long,
-        fechaFin: Long
-    ) {
+        val btnGuardarPresupuesto =
+            dialogView.findViewById<MaterialButton>(
+                R.id.btnGuardarPresupuesto
+            )
 
-        gastosPeriodoLiveData
-            ?.removeObservers(this)
+        if (presupuestoCentimos > 0) {
+            tvTituloPresupuesto.setText(
+                R.string.edit_budget
+            )
 
-        gastosPeriodoLiveData =
-            movimientoViewModel
-                .observarTotalPorTipo(
-                    tipo =
-                        MovimientoViewModel
-                            .TIPO_GASTO,
-                    fechaInicio = fechaInicio,
-                    fechaFin = fechaFin
+            etMontoPresupuesto.setText(
+                convertirCentimosATexto(
+                    presupuestoCentimos
+                )
+            )
+        }
+
+        val dialog =
+            MaterialAlertDialogBuilder(this)
+                .setView(dialogView)
+                .create()
+
+        dialog.show()
+
+        etMontoPresupuesto.doAfterTextChanged {
+            layoutMontoPresupuesto.error = null
+        }
+
+        btnCancelarPresupuesto.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnGuardarPresupuesto.setOnClickListener {
+            val montoCentimos =
+                obtenerCentimos(
+                    etMontoPresupuesto.text
+                        ?.toString()
+                        .orEmpty()
                 )
 
-        gastosPeriodoLiveData
-            ?.observe(this) { total ->
-
-                totalGastosCentimos =
-                    total ?: 0
-
-                tvGastos.text =
-                    formatearMonto(
-                        totalGastosCentimos
+            if (
+                montoCentimos == null ||
+                montoCentimos <= 0
+            ) {
+                layoutMontoPresupuesto.error =
+                    getString(
+                        R.string.invalid_budget
                     )
 
-                actualizarSaldo()
+                etMontoPresupuesto.requestFocus()
+
+                return@setOnClickListener
             }
+
+            btnGuardarPresupuesto.isEnabled =
+                false
+
+            val periodo =
+                obtenerPeriodoActual()
+
+            presupuestoViewModel.guardar(
+                periodo = periodo,
+                montoCentimos = montoCentimos,
+
+                onCompletado = {
+                    if (
+                        isFinishing ||
+                        isDestroyed
+                    ) {
+                        return@guardar
+                    }
+
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.budget_saved
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    dialog.dismiss()
+                },
+
+                onError = {
+                    if (
+                        !isFinishing &&
+                        !isDestroyed
+                    ) {
+                        btnGuardarPresupuesto.isEnabled =
+                            true
+
+                        Toast.makeText(
+                            this,
+                            getString(
+                                R.string.budget_save_error
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            )
+        }
     }
 
-    private fun actualizarSaldo() {
+    private fun obtenerCentimos(
+        texto: String
+    ): Long? {
+        val valorNormalizado =
+            texto
+                .trim()
+                .replace(",", ".")
 
-        val saldoCentimos =
-            totalIngresosCentimos -
-                    totalGastosCentimos
+        val decimal =
+            valorNormalizado
+                .toBigDecimalOrNull()
+                ?: return null
 
-        tvSaldo.text =
-            formatearMonto(
-                saldoCentimos
-            )
+        if (decimal.signum() <= 0) {
+            return null
+        }
+
+        return try {
+            decimal
+                .setScale(
+                    2,
+                    RoundingMode.HALF_UP
+                )
+                .movePointRight(2)
+                .longValueExact()
+        } catch (error: ArithmeticException) {
+            null
+        }
     }
 
-    private fun configurarPresupuestoInicial() {
-
-        progresoPresupuesto.setProgressCompat(
-            0,
-            false
-        )
-
-        tvPorcentajePresupuesto.text =
-            getString(
-                R.string.percentage_format,
-                0
-            )
-
-        tvDetallePresupuesto.text =
-            "Configura tu presupuesto mensual"
+    private fun convertirCentimosATexto(
+        montoCentimos: Long
+    ): String {
+        return BigDecimal
+            .valueOf(montoCentimos)
+            .movePointLeft(2)
+            .stripTrailingZeros()
+            .toPlainString()
     }
 
     private fun mostrarOpcionesMovimiento(
         movimiento: MovimientoEntity
     ) {
-
         val opciones =
             arrayOf(
                 getString(R.string.edit),
@@ -532,28 +806,18 @@ class MainActivity : AppCompatActivity() {
             )
 
         MaterialAlertDialogBuilder(this)
-            .setTitle(
-                R.string.movement_options
-            )
-            .setItems(opciones) {
-                    _,
-                    posicion ->
-
+            .setTitle(R.string.movement_options)
+            .setItems(opciones) { _, posicion ->
                 when (posicion) {
-
-                    0 -> {
-
+                    0 ->
                         abrirEdicionMovimiento(
                             movimiento
                         )
-                    }
 
-                    1 -> {
-
+                    1 ->
                         confirmarEliminacion(
                             movimiento
                         )
-                    }
                 }
             }
             .setNegativeButton(
@@ -566,52 +830,43 @@ class MainActivity : AppCompatActivity() {
     private fun abrirEdicionMovimiento(
         movimiento: MovimientoEntity
     ) {
-
         val intent =
             Intent(
                 this,
                 AgregarMovimientoActivity::class.java
             ).apply {
-
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_MOVIMIENTO_ID,
+                    AgregarMovimientoActivity.EXTRA_MOVIMIENTO_ID,
                     movimiento.id
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_TIPO,
+                    AgregarMovimientoActivity.EXTRA_TIPO,
                     movimiento.tipo
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_MONTO_CENTIMOS,
+                    AgregarMovimientoActivity.EXTRA_MONTO_CENTIMOS,
                     movimiento.montoCentimos
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_CATEGORIA,
+                    AgregarMovimientoActivity.EXTRA_CATEGORIA,
                     movimiento.categoria
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_DESCRIPCION,
+                    AgregarMovimientoActivity.EXTRA_DESCRIPCION,
                     movimiento.descripcion
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_FECHA,
+                    AgregarMovimientoActivity.EXTRA_FECHA,
                     movimiento.fecha
                 )
 
                 putExtra(
-                    AgregarMovimientoActivity
-                        .EXTRA_CREADO_EN,
+                    AgregarMovimientoActivity.EXTRA_CREADO_EN,
                     movimiento.creadoEn
                 )
             }
@@ -622,7 +877,6 @@ class MainActivity : AppCompatActivity() {
     private fun confirmarEliminacion(
         movimiento: MovimientoEntity
     ) {
-
         MaterialAlertDialogBuilder(this)
             .setTitle(
                 R.string.delete_movement_question
@@ -637,7 +891,6 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(
                 R.string.delete
             ) { dialog, _ ->
-
                 eliminarMovimiento(
                     movimiento
                 )
@@ -650,12 +903,10 @@ class MainActivity : AppCompatActivity() {
     private fun eliminarMovimiento(
         movimiento: MovimientoEntity
     ) {
-
         movimientoViewModel.eliminar(
             movimiento = movimiento,
 
             onCompletado = {
-
                 if (
                     isFinishing ||
                     isDestroyed
@@ -672,13 +923,11 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             },
 
-            onError = { error ->
-
+            onError = {
                 if (
                     !isFinishing &&
                     !isDestroyed
                 ) {
-
                     Toast.makeText(
                         this,
                         getString(
@@ -694,12 +943,8 @@ class MainActivity : AppCompatActivity() {
     private fun formatearMonto(
         montoCentimos: Long
     ): String {
-
-        val monto =
-            montoCentimos / 100.0
-
         return formatoMoneda.format(
-            monto
+            montoCentimos / 100.0
         )
     }
 }

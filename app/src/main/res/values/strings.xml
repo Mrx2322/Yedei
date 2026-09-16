@@ -120,4 +120,17 @@
     <string name="history_empty_help">Prueba seleccionando otro filtro</string>
     <string name="content_description_back">Volver</string>
 
+    <!-- PRESUPUESTO -->
+
+    <string name="configure_budget">Configurar presupuesto</string>
+    <string name="edit_budget">Editar presupuesto</string>
+    <string name="budget_dialog_help">Define cuánto deseas gastar durante este mes</string>
+    <string name="budget_amount">Presupuesto del mes</string>
+    <string name="save_budget">Guardar presupuesto</string>
+    <string name="budget_saved">Presupuesto guardado correctamente</string>
+    <string name="invalid_budget">Ingresa un presupuesto válido</string>
+    <string name="budget_save_error">No se pudo guardar el presupuesto</string>
+    <string name="budget_not_configured">Toca aquí para configurar tu presupuesto mensual</string>
+    <string name="budget_available_format">%1$s disponibles de %2$s</string>
+
 </resources>
