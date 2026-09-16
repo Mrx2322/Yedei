@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/yedei_background"
+    android:orientation="vertical"
+
+    tools:context=".ui.movimiento.HistorialMovimientosActivity">
+
+
+    <!-- CABECERA -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        android:paddingStart="12dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp">
+
+
+        <!-- VOLVER -->
+
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/content_description_back"
+            android:padding="9dp"
+            android:layout_marginEnd="12dp"
+            android:scaleType="centerInside"
+
+            app:srcCompat="@drawable/ic_volver" />
+
+
+        <!-- TÍTULOS -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/movement_history"
+                android:textColor="@color/yedei_text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="2dp"
+
+                android:text="@string/movement_history_subtitle"
+                android:textColor="@color/yedei_text_secondary"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- FILTROS -->
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleFiltroMovimiento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="14dp"
+
+        app:checkedButton="@id/btnFiltroTodos"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFiltroTodos"
+            style="?attr/materialButtonOutlinedStyle"
+
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+
+            android:text="@string/filter_all"
+            android:textAllCaps="false"
+
+            app:cornerRadius="14dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFiltroIngresos"
+            style="?attr/materialButtonOutlinedStyle"
+
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+
+            android:text="@string/movement_income"
+            android:textAllCaps="false"
+
+            app:cornerRadius="14dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFiltroGastos"
+            style="?attr/materialButtonOutlinedStyle"
+
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+
+            android:text="@string/movement_expense"
+            android:textAllCaps="false"
+
+            app:cornerRadius="14dp" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <!-- LISTA Y ESTADO VACÍO -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistorialMovimientos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+
+            android:paddingStart="20dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp"
+
+            tools:itemCount="7"
+            tools:listitem="@layout/item_movimiento" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutHistorialVacio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:padding="32dp"
+            android:visibility="gone"
+
+            tools:visibility="visible">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+
+                android:text="@string/history_empty"
+                android:textColor="@color/yedei_text_primary"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+
+                android:text="@string/history_empty_help"
+                android:textColor="@color/yedei_text_secondary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

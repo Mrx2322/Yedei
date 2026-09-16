@@ -111,4 +111,13 @@
     <string name="movement_delete_error">No se pudo eliminar el movimiento</string>
     <string name="movement_update_error">No se pudo actualizar el movimiento</string>
 
+    <!-- HISTORIAL -->
+
+    <string name="movement_history">Historial</string>
+    <string name="movement_history_subtitle">Consulta todos tus ingresos y gastos</string>
+    <string name="filter_all">Todos</string>
+    <string name="history_empty">No hay movimientos para mostrar</string>
+    <string name="history_empty_help">Prueba seleccionando otro filtro</string>
+    <string name="content_description_back">Volver</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.deiapp.yedei
 
+import com.deiapp.yedei.ui.movimiento.HistorialMovimientosActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.Intent
 import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
@@ -215,11 +216,13 @@ class MainActivity : AppCompatActivity() {
 
         tvVerTodos.setOnClickListener {
 
-            Toast.makeText(
-                this,
-                "Próximamente mostraremos el historial completo",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent =
+                Intent(
+                    this,
+                    HistorialMovimientosActivity::class.java
+                )
+
+            startActivity(intent)
         }
 
         fabAgregarMovimiento.setOnClickListener {
