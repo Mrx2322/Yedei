@@ -101,4 +101,14 @@
     <string name="content_description_income">Ingresos del mes</string>
     <string name="content_description_expenses">Gastos del mes</string>
 
+    <!-- EDICIÓN Y ELIMINACIÓN -->
+
+    <string name="movement_options">Opciones del movimiento</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_movement_question">¿Deseas eliminar este movimiento?</string>
+    <string name="delete_movement_explanation">Esta acción no se puede deshacer.</string>
+    <string name="movement_delete_error">No se pudo eliminar el movimiento</string>
+    <string name="movement_update_error">No se pudo actualizar el movimiento</string>
+
 </resources>

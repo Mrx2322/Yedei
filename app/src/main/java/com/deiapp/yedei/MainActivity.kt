@@ -1,5 +1,6 @@
 package com.deiapp.yedei
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.Intent
 import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
 import android.os.Bundle
@@ -174,11 +175,9 @@ class MainActivity : AppCompatActivity() {
         movimientoAdapter =
             MovimientoAdapter { movimiento ->
 
-                Toast.makeText(
-                    this,
-                    movimiento.categoria,
-                    Toast.LENGTH_SHORT
-                ).show()
+                mostrarOpcionesMovimiento(
+                    movimiento
+                )
             }
 
         rvMovimientos.layoutManager =
@@ -517,6 +516,176 @@ class MainActivity : AppCompatActivity() {
 
         tvDetallePresupuesto.text =
             "Configura tu presupuesto mensual"
+    }
+
+    private fun mostrarOpcionesMovimiento(
+        movimiento: MovimientoEntity
+    ) {
+
+        val opciones =
+            arrayOf(
+                getString(R.string.edit),
+                getString(R.string.delete)
+            )
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(
+                R.string.movement_options
+            )
+            .setItems(opciones) {
+                    _,
+                    posicion ->
+
+                when (posicion) {
+
+                    0 -> {
+
+                        abrirEdicionMovimiento(
+                            movimiento
+                        )
+                    }
+
+                    1 -> {
+
+                        confirmarEliminacion(
+                            movimiento
+                        )
+                    }
+                }
+            }
+            .setNegativeButton(
+                R.string.cancel,
+                null
+            )
+            .show()
+    }
+
+    private fun abrirEdicionMovimiento(
+        movimiento: MovimientoEntity
+    ) {
+
+        val intent =
+            Intent(
+                this,
+                AgregarMovimientoActivity::class.java
+            ).apply {
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_MOVIMIENTO_ID,
+                    movimiento.id
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_TIPO,
+                    movimiento.tipo
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_MONTO_CENTIMOS,
+                    movimiento.montoCentimos
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_CATEGORIA,
+                    movimiento.categoria
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_DESCRIPCION,
+                    movimiento.descripcion
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_FECHA,
+                    movimiento.fecha
+                )
+
+                putExtra(
+                    AgregarMovimientoActivity
+                        .EXTRA_CREADO_EN,
+                    movimiento.creadoEn
+                )
+            }
+
+        startActivity(intent)
+    }
+
+    private fun confirmarEliminacion(
+        movimiento: MovimientoEntity
+    ) {
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(
+                R.string.delete_movement_question
+            )
+            .setMessage(
+                R.string.delete_movement_explanation
+            )
+            .setNegativeButton(
+                R.string.cancel,
+                null
+            )
+            .setPositiveButton(
+                R.string.delete
+            ) { dialog, _ ->
+
+                eliminarMovimiento(
+                    movimiento
+                )
+
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun eliminarMovimiento(
+        movimiento: MovimientoEntity
+    ) {
+
+        movimientoViewModel.eliminar(
+            movimiento = movimiento,
+
+            onCompletado = {
+
+                if (
+                    isFinishing ||
+                    isDestroyed
+                ) {
+                    return@eliminar
+                }
+
+                Toast.makeText(
+                    this,
+                    getString(
+                        R.string.movement_deleted
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+
+            onError = { error ->
+
+                if (
+                    !isFinishing &&
+                    !isDestroyed
+                ) {
+
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.movement_delete_error
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
     }
 
     private fun formatearMonto(
