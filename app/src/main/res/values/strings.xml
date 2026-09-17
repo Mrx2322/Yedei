@@ -133,4 +133,12 @@
     <string name="budget_not_configured">Toca aquí para configurar tu presupuesto mensual</string>
     <string name="budget_available_format">%1$s disponibles de %2$s</string>
 
+    <string name="categoria_sin_nombre">Sin categoría</string>
+    <string name="porcentaje_gastos_categoria">%1$d%% de tus gastos</string>
+
+    <string name="expenses_by_category">Gastos por categoría</string>
+    <string name="expenses_by_category_help">Descubre en qué estás usando más dinero este mes.</string>
+    <string name="no_category_expenses">Todavía no hay gastos este mes</string>
+    <string name="no_category_expenses_help">Cuando registres un gasto, su categoría aparecerá aquí.</string>
+
 </resources>

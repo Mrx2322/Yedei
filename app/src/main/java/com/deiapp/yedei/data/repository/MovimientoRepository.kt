@@ -2,6 +2,7 @@ package com.deiapp.yedei.data.repository
 
 import com.deiapp.yedei.data.local.dao.MovimientoDao
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
+import com.deiapp.yedei.data.local.model.ResumenCategoria
 import kotlinx.coroutines.flow.Flow
 
 class MovimientoRepository(
@@ -31,6 +32,17 @@ class MovimientoRepository(
 
         return movimientoDao.observarTotalPorTipo(
             tipo = tipo,
+            fechaInicio = fechaInicio,
+            fechaFin = fechaFin
+        )
+    }
+
+    fun observarGastosPorCategoria(
+        fechaInicio: Long,
+        fechaFin: Long
+    ): Flow<List<ResumenCategoria>> {
+
+        return movimientoDao.observarGastosPorCategoria(
             fechaInicio = fechaInicio,
             fechaFin = fechaFin
         )

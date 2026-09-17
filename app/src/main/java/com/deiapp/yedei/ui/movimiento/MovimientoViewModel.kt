@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.deiapp.yedei.data.local.database.YedeiDatabase
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
+import com.deiapp.yedei.data.local.model.ResumenCategoria
 import com.deiapp.yedei.data.repository.MovimientoRepository
 import kotlinx.coroutines.launch
 
@@ -14,11 +15,9 @@ class MovimientoViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val repository:
-            MovimientoRepository
+    private val repository: MovimientoRepository
 
-    val movimientos:
-            LiveData<List<MovimientoEntity>>
+    val movimientos: LiveData<List<MovimientoEntity>>
 
     init {
         val movimientoDao =
@@ -65,15 +64,26 @@ class MovimientoViewModel(
             .asLiveData()
     }
 
+    fun observarGastosPorCategoria(
+        fechaInicio: Long,
+        fechaFin: Long
+    ): LiveData<List<ResumenCategoria>> {
+
+        return repository
+            .observarGastosPorCategoria(
+                fechaInicio = fechaInicio,
+                fechaFin = fechaFin
+            )
+            .asLiveData()
+    }
+
     fun insertar(
         movimiento: MovimientoEntity,
         onCompletado: (Long) -> Unit,
         onError: (Throwable) -> Unit
     ) {
         viewModelScope.launch {
-
             try {
-
                 val movimientoId =
                     repository.insertar(
                         movimiento
@@ -84,7 +94,6 @@ class MovimientoViewModel(
                 )
 
             } catch (error: Throwable) {
-
                 onError(
                     error
                 )
@@ -98,9 +107,7 @@ class MovimientoViewModel(
         onError: (Throwable) -> Unit = {}
     ) {
         viewModelScope.launch {
-
             try {
-
                 val movimientoActualizado =
                     movimiento.copy(
                         actualizadoEn =
@@ -114,7 +121,6 @@ class MovimientoViewModel(
                 onCompletado()
 
             } catch (error: Throwable) {
-
                 onError(
                     error
                 )
@@ -128,9 +134,7 @@ class MovimientoViewModel(
         onError: (Throwable) -> Unit = {}
     ) {
         viewModelScope.launch {
-
             try {
-
                 repository.eliminar(
                     movimiento
                 )
@@ -138,7 +142,6 @@ class MovimientoViewModel(
                 onCompletado()
 
             } catch (error: Throwable) {
-
                 onError(
                     error
                 )
@@ -151,15 +154,12 @@ class MovimientoViewModel(
         onError: (Throwable) -> Unit = {}
     ) {
         viewModelScope.launch {
-
             try {
-
                 repository.eliminarTodos()
 
                 onCompletado()
 
             } catch (error: Throwable) {
-
                 onError(
                     error
                 )

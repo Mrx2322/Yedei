@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="6dp"
+
+    app:cardBackgroundColor="@color/yedei_surface"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#E8E8F2"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- CÍRCULO CON INICIAL -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardIconoCategoria"
+
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+
+            app:cardBackgroundColor="#EEEAFE"
+            app:cardCornerRadius="23dp"
+            app:cardElevation="0dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvInicialCategoria"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:gravity="center"
+                android:textColor="@color/yedei_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                tools:text="A" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- NOMBRE -->
+
+        <TextView
+            android:id="@+id/tvNombreCategoria"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:textColor="@color/yedei_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toStartOf="@id/tvMontoCategoria"
+            app:layout_constraintStart_toEndOf="@id/cardIconoCategoria"
+            app:layout_constraintTop_toTopOf="@id/cardIconoCategoria"
+
+            tools:text="Alimentación" />
+
+        <!-- MONTO -->
+
+        <TextView
+            android:id="@+id/tvMontoCategoria"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/yedei_expense"
+            android:textSize="16sp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvNombreCategoria"
+
+            tools:text="S/ 350.00" />
+
+        <!-- PORCENTAJE -->
+
+        <TextView
+            android:id="@+id/tvPorcentajeCategoria"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+
+            android:textColor="@color/yedei_text_secondary"
+            android:textSize="13sp"
+
+            app:layout_constraintEnd_toEndOf="@id/tvNombreCategoria"
+            app:layout_constraintStart_toEndOf="@id/cardIconoCategoria"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreCategoria"
+
+            tools:text="35% de tus gastos" />
+
+        <!-- BARRA PROPORCIONAL -->
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progresoCategoria"
+
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+
+            android:layout_marginTop="14dp"
+
+            android:max="100"
+            android:progress="0"
+
+            app:indicatorColor="@color/yedei_primary"
+            app:trackColor="#EEEFF6"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="8dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardIconoCategoria"
+
+            tools:progress="35" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

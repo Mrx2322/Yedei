@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
 import com.deiapp.yedei.data.local.entity.PresupuestoEntity
+import com.deiapp.yedei.data.local.model.ResumenCategoria
 import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
 import com.deiapp.yedei.ui.movimiento.HistorialMovimientosActivity
 import com.deiapp.yedei.ui.movimiento.MovimientoViewModel
 import com.deiapp.yedei.ui.movimiento.adapter.MovimientoAdapter
+import com.deiapp.yedei.ui.movimiento.adapter.ResumenCategoriaAdapter
 import com.deiapp.yedei.ui.presupuesto.PresupuestoViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -50,6 +52,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var movimientoAdapter:
             MovimientoAdapter
 
+    private lateinit var resumenCategoriaAdapter:
+            ResumenCategoriaAdapter
+
     private lateinit var tvMesActual: TextView
     private lateinit var btnMesAnterior: TextView
     private lateinit var btnMesSiguiente: TextView
@@ -74,6 +79,12 @@ class MainActivity : AppCompatActivity() {
             RecyclerView
 
     private lateinit var layoutSinMovimientos:
+            View
+
+    private lateinit var rvResumenCategorias:
+            RecyclerView
+
+    private lateinit var layoutSinResumenCategorias:
             View
 
     private lateinit var tvVerTodos:
@@ -103,12 +114,18 @@ class MainActivity : AppCompatActivity() {
     private var gastosPeriodoLiveData:
             LiveData<Long>? = null
 
+    private var gastosCategoriaPeriodoLiveData:
+            LiveData<List<ResumenCategoria>>? = null
+
     private var presupuestoPeriodoLiveData:
             LiveData<PresupuestoEntity?>? = null
 
+    private val localePeru: Locale =
+        Locale.forLanguageTag("es-PE")
+
     private val formatoMoneda =
         NumberFormat.getCurrencyInstance(
-            Locale("es", "PE")
+            localePeru
         ).apply {
             currency =
                 Currency.getInstance("PEN")
@@ -187,6 +204,12 @@ class MainActivity : AppCompatActivity() {
         layoutSinMovimientos =
             findViewById(R.id.layoutSinMovimientos)
 
+        rvResumenCategorias =
+            findViewById(R.id.rvResumenCategorias)
+
+        layoutSinResumenCategorias =
+            findViewById(R.id.layoutSinResumenCategorias)
+
         tvVerTodos =
             findViewById(R.id.tvVerTodos)
 
@@ -209,6 +232,17 @@ class MainActivity : AppCompatActivity() {
             movimientoAdapter
 
         rvMovimientos.setHasFixedSize(false)
+
+        resumenCategoriaAdapter =
+            ResumenCategoriaAdapter()
+
+        rvResumenCategorias.layoutManager =
+            LinearLayoutManager(this)
+
+        rvResumenCategorias.adapter =
+            resumenCategoriaAdapter
+
+        rvResumenCategorias.setHasFixedSize(false)
     }
 
     private fun configurarEventos() {
@@ -284,6 +318,11 @@ class MainActivity : AppCompatActivity() {
             fechaFin
         )
 
+        observarGastosPorCategoria(
+            fechaInicio,
+            fechaFin
+        )
+
         observarPresupuestoDelMes(
             obtenerPeriodoActual()
         )
@@ -293,7 +332,7 @@ class MainActivity : AppCompatActivity() {
         val formatoMes =
             SimpleDateFormat(
                 "MMMM yyyy",
-                Locale("es", "PE")
+                localePeru
             )
 
         val nombreMes =
@@ -302,7 +341,7 @@ class MainActivity : AppCompatActivity() {
                 .replaceFirstChar { caracter ->
                     if (caracter.isLowerCase()) {
                         caracter.titlecase(
-                            Locale("es", "PE")
+                            localePeru
                         )
                     } else {
                         caracter.toString()
@@ -493,6 +532,35 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun observarGastosPorCategoria(
+        fechaInicio: Long,
+        fechaFin: Long
+    ) {
+        gastosCategoriaPeriodoLiveData
+            ?.removeObservers(this)
+
+        gastosCategoriaPeriodoLiveData =
+            movimientoViewModel
+                .observarGastosPorCategoria(
+                    fechaInicio = fechaInicio,
+                    fechaFin = fechaFin
+                )
+
+        gastosCategoriaPeriodoLiveData
+            ?.observe(this) { resumenCategorias ->
+                val lista =
+                    resumenCategorias.orEmpty()
+
+                resumenCategoriaAdapter.submitList(
+                    lista
+                )
+
+                actualizarEstadoResumenCategorias(
+                    lista.isNotEmpty()
+                )
+            }
+    }
+
     private fun actualizarTotalesVisuales() {
         tvIngresos.text =
             formatearMonto(
@@ -620,6 +688,24 @@ class MainActivity : AppCompatActivity() {
                 View.VISIBLE
             } else {
                 View.GONE
+            }
+    }
+
+    private fun actualizarEstadoResumenCategorias(
+        hayCategorias: Boolean
+    ) {
+        rvResumenCategorias.visibility =
+            if (hayCategorias) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+        layoutSinResumenCategorias.visibility =
+            if (hayCategorias) {
+                View.GONE
+            } else {
+                View.VISIBLE
             }
     }
 
@@ -781,7 +867,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 .movePointRight(2)
                 .longValueExact()
-        } catch (error: ArithmeticException) {
+        } catch (_: ArithmeticException) {
             null
         }
     }

@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
+import com.deiapp.yedei.data.local.model.ResumenCategoria
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -60,6 +61,23 @@ interface MovimientoDao {
         fechaInicio: Long,
         fechaFin: Long
     ): Flow<Long>
+
+    @Query(
+        """
+        SELECT
+            categoria AS categoria,
+            COALESCE(SUM(montoCentimos), 0) AS totalCentimos
+        FROM movimientos
+        WHERE tipo = 'GASTO'
+        AND fecha BETWEEN :fechaInicio AND :fechaFin
+        GROUP BY categoria
+        ORDER BY totalCentimos DESC
+        """
+    )
+    fun observarGastosPorCategoria(
+        fechaInicio: Long,
+        fechaFin: Long
+    ): Flow<List<ResumenCategoria>>
 
     @Query(
         """
