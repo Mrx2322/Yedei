@@ -52,15 +52,41 @@
                 android:textColor="@color/yedei_text_secondary"
                 android:textSize="14sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnVerEstadisticas"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="18dp"
-                android:text="@string/view_statistics"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/yedei_primary"
-                app:cornerRadius="16dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerEstadisticas"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:text="@string/view_statistics"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:backgroundTint="@color/yedei_primary"
+                    app:cornerRadius="18dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCopiaSeguridad"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:text="@string/backup_title"
+                    android:textColor="@color/yedei_primary"
+                    android:textSize="14sp"
+                    app:cornerRadius="18dp"
+                    app:strokeColor="@color/yedei_primary" />
+
+            </LinearLayout>
 
             <!-- SELECTOR DEL MES -->
 
@@ -77,9 +103,9 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/select_date"
+                    android:contentDescription="@string/previous_month"
                     android:gravity="center"
-                    android:text="‹"
+                    android:text="@string/month_arrow_previous"
                     android:textColor="@color/yedei_primary"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -101,9 +127,9 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/select_date"
+                    android:contentDescription="@string/next_month"
                     android:gravity="center"
-                    android:text="›"
+                    android:text="@string/month_arrow_next"
                     android:textColor="@color/yedei_primary"
                     android:textSize="32sp"
                     android:textStyle="bold" />
@@ -117,15 +143,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/yedei_navy"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="26dp"
+                app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_balance_gradient"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:padding="26dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,7 +167,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/white"
-                        android:textSize="35sp"
+                        android:textSize="38sp"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="24sp"
+                        app:autoSizeMaxTextSize="38sp"
+                        app:autoSizeStepGranularity="1sp"
                         android:textStyle="bold"
                         tools:text="S/ 0.00" />
 

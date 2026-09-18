@@ -36,6 +36,9 @@ interface MovimientoDao {
     )
     fun observarTodos(): Flow<List<MovimientoEntity>>
 
+    @Query("SELECT * FROM movimientos ORDER BY id ASC")
+    suspend fun obtenerTodosParaCopia(): List<MovimientoEntity>
+
     @Query(
         """
         SELECT * FROM movimientos
@@ -64,12 +67,11 @@ interface MovimientoDao {
 
     @Query(
         """
-        SELECT
-            categoria AS categoria,
-            COALESCE(SUM(montoCentimos), 0) AS totalCentimos
+        SELECT categoria AS categoria,
+               COALESCE(SUM(montoCentimos), 0) AS totalCentimos
         FROM movimientos
         WHERE tipo = 'GASTO'
-        AND fecha BETWEEN :fechaInicio AND :fechaFin
+          AND fecha BETWEEN :fechaInicio AND :fechaFin
         GROUP BY categoria
         ORDER BY totalCentimos DESC
         """

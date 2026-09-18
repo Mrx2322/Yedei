@@ -14,6 +14,9 @@ interface PresupuestoDao {
         presupuesto: PresupuestoEntity
     )
 
+    @Query("SELECT * FROM presupuestos ORDER BY periodo ASC")
+    suspend fun obtenerTodosParaCopia(): List<PresupuestoEntity>
+
     @Query(
         """
         SELECT * FROM presupuestos
@@ -45,4 +48,7 @@ interface PresupuestoDao {
     suspend fun eliminarPorPeriodo(
         periodo: String
     )
+
+    @Query("DELETE FROM presupuestos")
+    suspend fun eliminarTodos()
 }

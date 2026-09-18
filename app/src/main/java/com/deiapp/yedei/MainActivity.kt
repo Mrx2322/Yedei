@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.deiapp.yedei.data.local.entity.MovimientoEntity
 import com.deiapp.yedei.data.local.entity.PresupuestoEntity
 import com.deiapp.yedei.data.local.model.ResumenCategoria
+import com.deiapp.yedei.ui.backup.CopiaSeguridadActivity
 import com.deiapp.yedei.ui.movimiento.AgregarMovimientoActivity
 import com.deiapp.yedei.ui.movimiento.HistorialMovimientosActivity
 import com.deiapp.yedei.ui.movimiento.MovimientoViewModel
@@ -91,7 +92,10 @@ class MainActivity : AppCompatActivity() {
             TextView
 
     private lateinit var btnVerEstadisticas:
-            TextView
+            MaterialButton
+
+    private lateinit var btnCopiaSeguridad:
+            MaterialButton
 
     private lateinit var fabAgregarMovimiento:
             ExtendedFloatingActionButton
@@ -218,6 +222,9 @@ class MainActivity : AppCompatActivity() {
         btnVerEstadisticas =
             findViewById(R.id.btnVerEstadisticas)
 
+        btnCopiaSeguridad =
+            findViewById(R.id.btnCopiaSeguridad)
+
         fabAgregarMovimiento =
             findViewById(R.id.fabAgregarMovimiento)
     }
@@ -278,6 +285,15 @@ class MainActivity : AppCompatActivity() {
                 Intent(
                     this,
                     EstadisticasActivity::class.java
+                )
+            )
+        }
+
+        btnCopiaSeguridad.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    CopiaSeguridadActivity::class.java
                 )
             )
         }
@@ -1044,7 +1060,8 @@ class MainActivity : AppCompatActivity() {
         montoCentimos: Long
     ): String {
         return formatoMoneda.format(
-            montoCentimos / 100.0
+            BigDecimal.valueOf(montoCentimos)
+                .movePointLeft(2)
         )
     }
 }

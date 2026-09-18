@@ -169,4 +169,12 @@
 
     <string name="movement_amount_with_sign">%1$s %2$s</string>
 
+    <string name="descripcion_copia_seguridad">Guarda tus movimientos y presupuestos en un archivo JSON. Conserva ese archivo en un lugar seguro para poder recuperarlos.</string>
+    <string name="guardar_copia">Guardar copia</string>
+    <string name="restaurar_copia">Restaurar copia</string>
+
+    <string name="backup_title">Copia de seguridad</string>
+    <string name="month_arrow_previous">‹</string>
+    <string name="month_arrow_next">›</string>
+
 </resources>

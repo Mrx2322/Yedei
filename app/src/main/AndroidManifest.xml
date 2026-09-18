@@ -42,6 +42,11 @@
             android:name=".EstadisticasActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Gestor de seguridad -->
+        <activity
+            android:name=".ui.backup.CopiaSeguridadActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
