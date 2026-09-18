@@ -52,6 +52,16 @@
                 android:textColor="@color/yedei_text_secondary"
                 android:textSize="14sp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVerEstadisticas"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/view_statistics"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/yedei_primary"
+                app:cornerRadius="16dp" />
+
             <!-- SELECTOR DEL MES -->
 
             <LinearLayout

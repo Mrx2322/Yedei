@@ -141,4 +141,30 @@
     <string name="no_category_expenses">Todavía no hay gastos este mes</string>
     <string name="no_category_expenses_help">Cuando registres un gasto, su categoría aparecerá aquí.</string>
 
+    <!-- ESTADISTICAS MENSUALES -->
+    <string name="go_back">Volver</string>
+    <string name="monthly_statistics">Estadísticas mensuales</string>
+    <string name="statistics_subtitle">Analiza cómo se mueve tu dinero.</string>
+    <string name="previous_month">Mes anterior</string>
+    <string name="next_month">Mes siguiente</string>
+    <string name="month_balance">Balance del mes</string>
+    <string name="monthly_comparison">Comparación mensual</string>
+    <string name="highest_expense_category">Categoría con mayor gasto</string>
+    <string name="expense_distribution">Distribución de gastos</string>
+    <string name="expense_distribution_help">Porcentaje utilizado en cada categoría.</string>
+    <string name="no_statistics">No hay estadísticas disponibles</string>
+    <string name="no_statistics_help">Registra ingresos y gastos para comenzar a analizar el mes.</string>
+
+    <string name="statistics_loading">Calculando comparación…</string>
+    <string name="statistics_no_movements">Todavía no hay movimientos este mes.</string>
+    <string name="statistics_positive_balance">Tus ingresos superan tus gastos.</string>
+    <string name="statistics_negative_balance">Tus gastos superan tus ingresos.</string>
+    <string name="statistics_even_balance">Tus ingresos y gastos están equilibrados.</string>
+    <string name="statistics_no_expenses_comparison">No hubo gastos en ninguno de los dos meses.</string>
+    <string name="statistics_no_previous_expenses">El mes anterior no registraste gastos. Este mes llevas %1$s.</string>
+    <string name="statistics_same_expenses">Gastaste lo mismo que el mes anterior.</string>
+    <string name="statistics_spent_more">Gastaste %1$s%% más que el mes anterior.</string>
+    <string name="statistics_spent_less">Gastaste %1$s%% menos que el mes anterior.</string>
+    <string name="view_statistics">Ver estadísticas mensuales</string>
+
 </resources>

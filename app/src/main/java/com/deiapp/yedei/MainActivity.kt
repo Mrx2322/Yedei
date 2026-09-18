@@ -90,6 +90,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvVerTodos:
             TextView
 
+    private lateinit var btnVerEstadisticas:
+            TextView
+
     private lateinit var fabAgregarMovimiento:
             ExtendedFloatingActionButton
 
@@ -120,8 +123,7 @@ class MainActivity : AppCompatActivity() {
     private var presupuestoPeriodoLiveData:
             LiveData<PresupuestoEntity?>? = null
 
-    private val localePeru: Locale =
-        Locale.forLanguageTag("es-PE")
+    private val localePeru = Locale.forLanguageTag("es-PE")
 
     private val formatoMoneda =
         NumberFormat.getCurrencyInstance(
@@ -213,6 +215,9 @@ class MainActivity : AppCompatActivity() {
         tvVerTodos =
             findViewById(R.id.tvVerTodos)
 
+        btnVerEstadisticas =
+            findViewById(R.id.btnVerEstadisticas)
+
         fabAgregarMovimiento =
             findViewById(R.id.fabAgregarMovimiento)
     }
@@ -266,6 +271,15 @@ class MainActivity : AppCompatActivity() {
 
         cardPresupuesto.setOnClickListener {
             mostrarDialogoPresupuesto()
+        }
+
+        btnVerEstadisticas.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    EstadisticasActivity::class.java
+                )
+            )
         }
 
         tvVerTodos.setOnClickListener {
