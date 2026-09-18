@@ -8,9 +8,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yedei_background"
+    android:background="@drawable/fondo_yeidei"
 
     tools:context=".MainActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000" />
 
     <!-- CONTENIDO PRINCIPAL -->
 
@@ -39,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/home_greeting"
-                android:textColor="@color/yedei_text_primary"
+                android:textColor="#FFFFFFFF"
                 android:textSize="27sp"
                 android:textStyle="bold" />
 
@@ -49,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/home_subtitle"
-                android:textColor="@color/yedei_text_secondary"
+                android:textColor="#E4E7F2"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -59,32 +64,44 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
+                <TextView
                     android:id="@+id/btnVerEstadisticas"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_button_statistics"
+                    android:clickable="true"
+                    android:elevation="3dp"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:maxLines="2"
-                    android:text="@string/view_statistics"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/statistics_monthly_action"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    app:backgroundTint="@color/yedei_primary"
-                    app:cornerRadius="18dp" />
+                    android:textStyle="bold" />
 
-                <com.google.android.material.button.MaterialButton
+                <TextView
                     android:id="@+id/btnCopiaSeguridad"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="60dp"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
+                    android:background="@drawable/bg_button_backup"
+                    android:clickable="true"
+                    android:elevation="3dp"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:maxLines="2"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/backup_title"
-                    android:textColor="@color/yedei_primary"
-                    android:textSize="14sp"
-                    app:cornerRadius="18dp"
-                    app:strokeColor="@color/yedei_primary" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/yedei_navy"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -106,7 +123,7 @@
                     android:contentDescription="@string/previous_month"
                     android:gravity="center"
                     android:text="@string/month_arrow_previous"
-                    android:textColor="@color/yedei_primary"
+                    android:textColor="#DDD3FF"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -117,7 +134,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/current_month"
-                    android:textColor="@color/yedei_text_primary"
+                    android:textColor="#FFFFFFFF"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     tools:text="Septiembre 2026" />
@@ -130,7 +147,7 @@
                     android:contentDescription="@string/next_month"
                     android:gravity="center"
                     android:text="@string/month_arrow_next"
-                    android:textColor="@color/yedei_primary"
+                    android:textColor="#DDD3FF"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -142,10 +159,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                app:cardBackgroundColor="@color/yedei_navy"
+                app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="26dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                app:cardElevation="2dp"
+                app:strokeColor="#66FFFFFF"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -203,15 +221,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/yedei_income_background"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#3316A34A"
+                    app:cardElevation="1dp"
+                    app:strokeColor="#B3FFFFFF"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_income_glass"
                         android:orientation="vertical"
                         android:padding="17dp">
 
@@ -244,15 +263,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/yedei_expense_background"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#33DC2626"
+                    app:cardElevation="1dp"
+                    app:strokeColor="#B3FFFFFF"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bg_expense_glass"
                         android:orientation="vertical"
                         android:padding="17dp">
 
@@ -287,15 +307,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/yedei_surface"
+                app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="1dp"
-                app:strokeColor="@color/yedei_border"
+                app:cardElevation="2dp"
+                app:strokeColor="#CCFFFFFF"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_budget_glass"
                     android:orientation="vertical"
                     android:padding="19dp">
 
@@ -310,7 +331,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/monthly_budget"
-                            android:textColor="@color/yedei_text_primary"
+                            android:textColor="#1E2540"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -318,7 +339,7 @@
                             android:id="@+id/tvPorcentajePresupuesto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/yedei_primary"
+                            android:textColor="#514BC9"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             tools:text="0%" />
@@ -342,7 +363,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/yedei_text_secondary"
+                        android:textColor="#37415A"
                         android:textSize="13sp"
                         tools:text="S/ 0.00 disponibles de S/ 0.00" />
 
@@ -363,7 +384,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/expenses_by_category"
-                    android:textColor="@color/yedei_text_primary"
+                    android:textColor="#FFFFFFFF"
                     android:textSize="19sp"
                     android:textStyle="bold" />
 
@@ -372,7 +393,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/expenses_by_category_help"
-                    android:textColor="@color/yedei_text_secondary"
+                    android:textColor="#E4E7F2"
                     android:textSize="13sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -447,7 +468,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/recent_movements"
-                    android:textColor="@color/yedei_text_primary"
+                    android:textColor="#FFFFFFFF"
                     android:textSize="19sp"
                     android:textStyle="bold" />
 
@@ -460,7 +481,7 @@
                     android:paddingStart="12dp"
                     android:paddingEnd="4dp"
                     android:text="@string/view_all"
-                    android:textColor="@color/yedei_primary"
+                    android:textColor="#DED6FF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -542,7 +563,7 @@
         android:contentDescription="@string/content_description_add"
         android:text="@string/add_movement"
         android:textColor="@color/white"
-        app:backgroundTint="@color/yedei_primary"
+        app:backgroundTint="#CC5C50D8"
         app:elevation="6dp" />
 
 </FrameLayout>

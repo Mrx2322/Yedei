@@ -176,5 +176,6 @@
     <string name="backup_title">Copia de seguridad</string>
     <string name="month_arrow_previous">‹</string>
     <string name="month_arrow_next">›</string>
+    <string name="statistics_monthly_action">Ver estadísticas mensuales</string>
 
 </resources>

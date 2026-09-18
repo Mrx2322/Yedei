@@ -16,7 +16,7 @@
     <color name="yedei_primary_light">#EEEAFE</color>
 
     <color name="yedei_secondary">#22C55E</color>
-    <color name="yedei_secondary_dark">#15803D</color>
+    <color name="yedei_secondary_dark">#312773</color>
     <color name="yedei_secondary_light">#DCFCE7</color>
 
     <color name="yedei_navy">#18213F</color>
@@ -31,15 +31,15 @@
 
     <!-- TEXTOS -->
 
-    <color name="yedei_text_primary">#191B2A</color>
-    <color name="yedei_text_secondary">#6B7280</color>
-    <color name="yedei_text_disabled">#9CA3AF</color>
+    <color name="yedei_text_primary">#EDE6E6</color>
+    <color name="yedei_text_secondary">#FCFFFF</color>
+    <color name="yedei_text_disabled">#BAC0CA</color>
     <color name="yedei_text_on_primary">#FFFFFFFF</color>
 
 
     <!-- MOVIMIENTOS FINANCIEROS -->
 
-    <color name="yedei_income">#16A34A</color>
+    <color name="yedei_income">#4B26CE</color>
     <color name="yedei_income_background">#DCFCE7</color>
 
     <color name="yedei_expense">#DC2626</color>

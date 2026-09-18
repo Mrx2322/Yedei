@@ -92,10 +92,10 @@ class MainActivity : AppCompatActivity() {
             TextView
 
     private lateinit var btnVerEstadisticas:
-            MaterialButton
+            TextView
 
     private lateinit var btnCopiaSeguridad:
-            MaterialButton
+            TextView
 
     private lateinit var fabAgregarMovimiento:
             ExtendedFloatingActionButton
