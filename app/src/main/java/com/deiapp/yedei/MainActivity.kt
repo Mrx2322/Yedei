@@ -1,9 +1,12 @@
 package com.deiapp.yedei
 
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -147,9 +150,55 @@ class MainActivity : AppCompatActivity() {
 
         configurarInsets()
         inicializarComponentes()
+        prepararAnimacionEntrada(savedInstanceState)
         configurarRecyclerView()
         configurarEventos()
         actualizarMesSeleccionado()
+
+        if (savedInstanceState == null) {
+            findViewById<View>(R.id.main).post {
+                animarEntrada()
+            }
+        }
+    }
+
+    private fun animacionesHabilitadas(): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
+                ValueAnimator.areAnimatorsEnabled()
+
+    private fun vistasAnimadas(): List<View> = listOf(
+        findViewById(R.id.tvSaludo),
+        findViewById(R.id.tvSubtitulo),
+        findViewById(R.id.layoutAccionesInicio),
+        findViewById(R.id.layoutSelectorMes),
+        findViewById(R.id.cardSaldo),
+        findViewById(R.id.layoutTotales),
+        cardPresupuesto,
+        fabAgregarMovimiento
+    )
+
+    private fun prepararAnimacionEntrada(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null || !animacionesHabilitadas()) return
+
+        val desplazamiento = 16f * resources.displayMetrics.density
+        vistasAnimadas().forEach { vista ->
+            vista.alpha = 0f
+            vista.translationY = desplazamiento
+        }
+    }
+
+    private fun animarEntrada() {
+        if (!animacionesHabilitadas()) return
+
+        vistasAnimadas().forEachIndexed { indice, vista ->
+            vista.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay(indice * 65L)
+                .setDuration(360L)
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+        }
     }
 
     private fun configurarInsets() {

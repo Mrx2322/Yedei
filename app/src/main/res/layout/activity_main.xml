@@ -58,6 +58,7 @@
                 android:textSize="14sp" />
 
             <LinearLayout
+                android:id="@+id/layoutAccionesInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -156,6 +157,7 @@
             <!-- TARJETA DE SALDO -->
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSaldo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -208,6 +210,7 @@
             <!-- INGRESOS Y GASTOS -->
 
             <LinearLayout
+                android:id="@+id/layoutTotales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
@@ -238,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/total_income"
-                            android:textColor="@color/yedei_secondary_dark"
+                            android:textColor="#1F513F"
                             android:textSize="13sp"
                             android:textStyle="bold" />
 
@@ -247,7 +250,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/yedei_income"
+                            android:textColor="#167347"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             tools:text="S/ 0.00" />
@@ -280,7 +283,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/total_expenses"
-                            android:textColor="@color/yedei_expense"
+                            android:textColor="#B42318"
                             android:textSize="13sp"
                             android:textStyle="bold" />
 
@@ -289,7 +292,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/yedei_expense"
+                            android:textColor="#B42318"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             tools:text="S/ 0.00" />
@@ -435,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/no_category_expenses"
-                            android:textColor="@color/yedei_text_primary"
+                            android:textColor="#25304A"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -445,7 +448,7 @@
                             android:layout_marginTop="6dp"
                             android:gravity="center"
                             android:text="@string/no_category_expenses_help"
-                            android:textColor="@color/yedei_text_secondary"
+                            android:textColor="#667085"
                             android:textSize="13sp" />
 
                     </LinearLayout>
@@ -530,7 +533,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/no_movements"
-                        android:textColor="@color/yedei_text_primary"
+                        android:textColor="#25304A"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -540,7 +543,7 @@
                         android:layout_marginTop="8dp"
                         android:gravity="center"
                         android:text="@string/no_movements_help"
-                        android:textColor="@color/yedei_text_secondary"
+                        android:textColor="#667085"
                         android:textSize="13sp" />
 
                 </LinearLayout>

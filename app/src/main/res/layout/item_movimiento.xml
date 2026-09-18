@@ -10,10 +10,10 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
 
-    app:cardBackgroundColor="@color/yedei_surface"
-    app:cardCornerRadius="18dp"
+    app:cardBackgroundColor="#F7FFFFFF"
+    app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/yedei_border"
+    app:strokeColor="#DCE2EE"
     app:strokeWidth="1dp">
 
 
@@ -24,24 +24,31 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
 
-        android:padding="15dp">
+        android:padding="18dp">
 
 
         <!-- INDICADOR DEL TIPO -->
 
-        <TextView
-            android:id="@+id/tvIconoMovimiento"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+        <FrameLayout
+            android:layout_width="42dp"
+            android:layout_height="42dp">
 
-            android:gravity="center"
+            <!-- El adapter sigue encontrando este TextView, pero no se muestra. -->
+            <TextView
+                android:id="@+id/tvIconoMovimiento"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
-            android:textColor="@color/yedei_income"
-            android:textSize="19sp"
-            android:textStyle="bold"
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_dinero" />
 
-            tools:background="@color/yedei_income_background"
-            tools:text="I" />
+        </FrameLayout>
 
 
         <!-- INFORMACIÓN -->
@@ -50,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
 
             android:orientation="vertical">
@@ -64,8 +71,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
 
-                android:textColor="@color/yedei_text_primary"
-                android:textSize="16sp"
+                android:textColor="#25304A"
+                android:textSize="15sp"
                 android:textStyle="bold"
 
                 tools:text="Sueldo" />
@@ -81,7 +88,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
 
-                android:textColor="@color/yedei_text_secondary"
+                android:textColor="#596579"
                 android:textSize="13sp"
 
                 tools:text="Pago del mes" />
@@ -94,7 +101,7 @@
 
                 android:layout_marginTop="4dp"
 
-                android:textColor="@color/yedei_text_disabled"
+                android:textColor="#667085"
                 android:textSize="12sp"
 
                 tools:text="16 de septiembre" />
@@ -115,7 +122,7 @@
             android:maxLines="1"
 
             android:textColor="@color/yedei_income"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
 
             tools:text="+ S/ 1,500.00" />
