@@ -47,7 +47,7 @@ class AgregarMovimientoActivity : AppCompatActivity() {
     private val formatoFecha =
         SimpleDateFormat(
             "dd/MM/yyyy",
-            Locale("es", "PE")
+            Locale.forLanguageTag("es-PE")
         )
 
     private var movimientoId: Long = 0
@@ -512,7 +512,7 @@ class AgregarMovimientoActivity : AppCompatActivity() {
                 )
                 .movePointRight(2)
                 .longValueExact()
-        } catch (error: ArithmeticException) {
+        } catch (_: ArithmeticException) {
             mostrarErrorMonto()
             null
         }

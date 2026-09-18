@@ -92,15 +92,17 @@ class MovimientoAdapter(
                 R.id.tvMontoMovimiento
             )
 
+        private val localePeru = Locale.forLanguageTag("es-PE")
+
         private val formatoFecha =
             SimpleDateFormat(
                 "dd 'de' MMMM",
-                Locale("es", "PE")
+                localePeru
             )
 
         private val formatoMoneda =
             NumberFormat.getCurrencyInstance(
-                Locale("es", "PE")
+                localePeru
             ).apply {
                 currency =
                     Currency.getInstance("PEN")
@@ -215,8 +217,11 @@ class MovimientoAdapter(
                     ) / 100.0
                 )
 
-            tvMontoMovimiento.text =
-                "$prefijo $montoFormateado"
+            tvMontoMovimiento.text = itemView.context.getString(
+                R.string.movement_amount_with_sign,
+                prefijo,
+                montoFormateado
+            )
         }
 
         private fun crearFondoIndicador(

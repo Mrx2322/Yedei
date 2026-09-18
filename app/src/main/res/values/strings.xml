@@ -167,4 +167,6 @@
     <string name="statistics_spent_less">Gastaste %1$s%% menos que el mes anterior.</string>
     <string name="view_statistics">Ver estadísticas mensuales</string>
 
+    <string name="movement_amount_with_sign">%1$s %2$s</string>
+
 </resources>

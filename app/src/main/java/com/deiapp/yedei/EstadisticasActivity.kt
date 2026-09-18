@@ -26,7 +26,7 @@ class EstadisticasActivity : AppCompatActivity() {
 
     private val movimientoViewModel: MovimientoViewModel by viewModels()
     private val mesSeleccionado: Calendar = Calendar.getInstance()
-    private val locale = Locale("es", "PE")
+    private val locale = Locale.forLanguageTag("es-PE")
 
     private val formatoMoneda = NumberFormat.getCurrencyInstance(locale).apply {
         currency = Currency.getInstance("PEN")
